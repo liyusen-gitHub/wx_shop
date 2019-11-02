@@ -1,25 +1,89 @@
 <template>
-    <view>home页面这是首页</view>
+    <view class="home">
+        <swiper indicator-dots circular>
+            <swiper-item wx:for="{{swiperData}}" wx:key="index">
+                <navigator url="{{item.navigator_url}}">
+                    <image src="{{item.image_src}}"></image>
+                </navigator>
+            </swiper-item>
+            <!-- <swiper-item>
+                <image src="https://api.zbztb.cn/pyg/banner1.png"></image>
+            </swiper-item>
+            <swiper-item>
+                <image src="https://api.zbztb.cn/pyg/banner1.png"></image>
+            </swiper-item> -->
+        </swiper>
+    </view>
+    <view class="cates">
+        <navigator hover-class="none" wx:for="{{catesData}}" wx:key="{{index}}" url="/pages/tabs/cates" open-type="switchTab">
+            <image src="{{item.image_src}}"></image>
+        </navigator>
+    </view>
+    <!-- 楼层 -->
+    <view class="floor">
+        <view class="floor_item" wx:for="{{floorData}}" wx:key="index">
+            <image class="titleimg" src="{{item.floor_title.image_src}}"></image>
+            <view class="contentimgview">
+                <image wx:for="{{item.product_list}}" src="{{item.image_src}}" wx:key="index"></image>
+            </view>
+        </view>
+    </view>
 </template>
 
 <script>
 
-import wepy from 'wepy'
+    import wepy from 'wepy'
+    import mixnhome from '../../mixins/tabs/home.js'
 
-export default class Home extends wepy.page {
-    data = {
+    export default class Home extends wepy.page {
+      mixins=[mixnhome]
     }
-
-    config = {
-    }
-
-    methods = {
-
-    }
-}
 
 </script>
 
 <style lang='less'>
+    .home {
+        swiper {
+            height: 350rpx;
+            navigator,image {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+    .cates{
+        display: flex;
+        padding: 20rpx 0;
+        navigator{
+            width: 25%;
+            text-align:center;
+            image{
+                width: 128rpx;
+                height:140rpx;
+            }
+        }
+    }
+    .floor{
+        .floor_item{
+                padding: 10px 10px;
+            .titleimg{
+                height:50rpx;
+                width:640rpx;
+            }
+            .contentimgview{
+                height: 390rpx;
 
+                padding-bottom: 10px;
+                image{
+                    float: left;
+                    width: 200rpx;
+                    height:190rpx;
+                    padding:15rpx 15rpx 0 15rpx;
+                }
+                image:nth-child(1){
+                    height:390rpx;
+                }
+            }
+        }
+    }
 </style>
