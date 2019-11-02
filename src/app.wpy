@@ -1,0 +1,42 @@
+<style lang="less">
+
+</style>
+
+<script>
+import wepy from 'wepy'
+import 'wepy-async-function'
+
+
+export default class extends wepy.app {
+  config = {
+    pages: [
+      'pages/tabs/home',
+      'pages/tabs/cart',
+      'pages/tabs/search',
+      'pages/tabs/cates',
+      'pages/tabs/my'
+    ],
+    window: {
+      backgroundTextStyle: 'light',
+      navigationBarBackgroundColor: '#EE6363',
+      navigationBarTitleText: '网购商城',
+      navigationBarTextStyle: 'white'
+    }
+  }
+
+  globalData = {
+    userInfo: null
+  }
+
+  constructor () {
+    super()
+    this.use('requestfix')
+  }
+
+  onLaunch() {
+    
+  }
+
+ 
+}
+</script>
