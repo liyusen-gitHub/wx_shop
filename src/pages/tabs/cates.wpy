@@ -1,25 +1,75 @@
 <template>
-    <view>分类页面</view>
+    <view class="vate_box">
+        <scroll-view class="scrollleft" scroll-y>
+            <van-sidebar active="{{ 0 }}" bind:change="onChange">
+                <van-sidebar-item wx:for="{{cateslist}}" title="{{item.cat_name}}" wx:key="index" />
+                <!-- <van-sidebar-item title="标签名称" />
+                        <van-sidebar-item title="标签名称" /> -->
+            </van-sidebar>
+        </scroll-view>
+        <scroll-view class="scrollright" scroll-y>
+            <view wx:for="{{catechildrenList}}" wx:key="index">
+                <text class="secondtitle">/ {{item.cat_name}} /</text>
+                <van-grid column-num="3" border="{{ false }}">
+                    <van-grid-item url="/pages/goods_list/index?cat_id={{item.cat_id}}" use-slot wx:for="{{ item.children }}" wx:key="index">
+                        <image src="{{item.cat_icon}}" />
+                        <text class="textbottom">{{item.cat_name}}</text>
+                    </van-grid-item>
+                </van-grid>
+            </view>
+        </scroll-view>
+    </view>
+
+
+
 </template>
 
 <script>
 
-import wepy from 'wepy'
+    import wepy from 'wepy'
+    import mixncates from '../../mixins/tabs/cates.js'
 
-export default class cates extends wepy.page {
-    data = {
+    export default class cates extends wepy.page {
+        mixins = [mixncates]
     }
 
-    config = {
-    }
-
-    methods = {
-
-    }
-}
 
 </script>
 
 <style lang='less'>
+    page {
+        height: 100%;
 
+        .vate_box {
+            height: 100%;
+            display: flex;
+
+            .scrollleft {
+                height: 100%;
+                width: 85px;
+            }
+
+            .scrollright {
+                text-align: center;
+
+                .secondtitle {
+                    display: block;
+                    font-size: 30rpx;
+                    line-height: 30px;
+                }
+
+                image {
+                    width: 120rpx;
+                    height: 120rpx;
+                }
+
+                .textbottom {
+                    font-size: 28rpx;
+                    line-height: 30px;
+                    height:30px;
+                    overflow: hidden;
+                }
+            }
+        }
+    }
 </style>

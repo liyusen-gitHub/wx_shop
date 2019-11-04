@@ -24,7 +24,7 @@
         <view class="floor_item" wx:for="{{floorData}}" wx:key="index">
             <image class="titleimg" src="{{item.floor_title.image_src}}"></image>
             <view class="contentimgview">
-                <image wx:for="{{item.product_list}}" src="{{item.image_src}}" wx:key="index"></image>
+                <image @tap="gotoGoodslist({{item.navigator_url}})" wx:for="{{item.product_list}}" src="{{item.image_src}}" wx:key="index"></image>
             </view>
         </view>
     </view>
@@ -78,7 +78,7 @@
                     float: left;
                     width: 200rpx;
                     height:190rpx;
-                    padding:15rpx 15rpx 0 15rpx;
+                    padding:15rpx 25rpx 0 15rpx;
                 }
                 image:nth-child(1){
                     height:390rpx;

@@ -25,4 +25,5 @@ wepy.post=function(path,data={}){
         method:'post'
     })
 }
+ 
 
