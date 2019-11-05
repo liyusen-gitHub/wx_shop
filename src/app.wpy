@@ -27,7 +27,13 @@
         "van-cell": "./components/lib/cell/index",
         "van-cell-group": "./components/lib/cell-group/index",
         "van-icon": "./components/lib/icon/index",
-        "van-tag": "./components/lib/tag/index"
+        "van-tag": "./components/lib/tag/index",
+        "van-card": "./components/lib/card/index",
+        "van-tab": "./components/lib/tab/index",
+        "van-tabs": "./components/lib/tabs/index",
+        "van-goods-action": "./components/lib/goods-action/index",
+        "van-goods-action-icon": "./components/lib/goods-action-icon/index",
+        "van-goods-action-button": "./components/lib/goods-action-button/index"
       },
       window: {
         backgroundTextStyle: 'light',

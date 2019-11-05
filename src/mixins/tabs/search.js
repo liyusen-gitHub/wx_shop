@@ -5,7 +5,7 @@ export default class search extends wepy.mixin {
     data = {
         searchtext: '',
         suggestList: [],
-        searchhistory:[]
+        searchhistory: []
     }
 
     config = {
@@ -18,46 +18,49 @@ export default class search extends wepy.mixin {
             const { data } = await wepy.get("/goods/qsearch", {
                 query: this.searchtext
             })
-            if(data.meta.status!==200)
-            {
+            if (data.meta.status !== 200) {
                 return wepy.baseToast()
             }
             this.suggestList = data.message
             this.$apply()
         },
-        onSearch(){
-            if(this.searchtext.trim().length==0) return
+        onSearch() {
+            if (this.searchtext.trim().length == 0) return
             // console.log(this.searchtext)
             // console.log(this.searchhistory)
-            if(this.searchhistory.length==0)
-            {
-                this.searchhistory=[]
+            if (this.searchhistory.length == 0) {
+                this.searchhistory = []
             }
             this.searchhistory.unshift(this.searchtext)
 
 
-            this.searchhistory=this.searchhistory.splice(0,10)
+            this.searchhistory = this.searchhistory.splice(0, 10)
 
-            wepy.setStorageSync("searchhistory",this.searchhistory)
+            wepy.setStorageSync("searchhistory", this.searchhistory)
             wepy.navigateTo({
-                url:"/pages/goods_list/index?query="+this.searchtext
+                url: "/pages/goods_list/index?query=" + this.searchtext
             })
         },
-        gotogooslist(even){
-            console.log(even)
+        gotogooslist(query,index) {
+            console.log(query)
+            wepy.navigateTo({
+                url: "/pages/goods_list/index?query=" + query
+            })
+            this.searchhistory.splice(index,1)
+            this.searchhistory.unshift(query)
         },
-        delhistory(){
-            
-            wepy.setStorageSync("searchhistory",[])
-            this.searchhistory=[]
+        delhistory() {
+
+            wepy.setStorageSync("searchhistory", [])
+            this.searchhistory = []
             this.$apply()
         }
     }
-    
-// url="/pages/goods_list/index?query={{item}}"
+
+    // url="/pages/goods_list/index?query={{item}}"
     //页面加载
     onLoad() {
         //从本地加载搜索历史记录
-        this.searchhistory= wepy.getStorageSync("searchhistory")
+        this.searchhistory = wepy.getStorageSync("searchhistory")
     }
 }

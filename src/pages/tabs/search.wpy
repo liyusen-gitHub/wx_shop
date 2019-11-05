@@ -2,18 +2,18 @@
     <view>
         <van-search value="{{ searchtext }}" placeholder="请输入搜索关键词" show-action bind:search="onSearch"
             bind:cancel="onCancel" bind:change="onchange" />
-        <van-cell-group hidden="{{suggestList.length==0}}">
+        <van-cell-group hidden="{{searchtext==''}}">
             <van-cell url="/pages/goods_list/index?goods_id={{item.goods_id}}" title="{{item.goods_name}}"
                 wx:for="{{suggestList}}" wx:key="index" />
         </van-cell-group>
     </view>
-    <view class="history" hidden="{{suggestList.length>0}}">
+    <view class="history" hidden="{{searchtext!==''}}">
         <view class="historytitle">
             <text>搜索历史</text>
             <van-icon bind:click="delhistory" name="delete" />
         </view>
         <view class="historycontent">
-            <van-tag wx:for="{{searchhistory}}" wx:key="index" @click="gotogooslist({{item}})">{{item}}</van-tag>
+            <van-tag wx:for="{{searchhistory}}" wx:key="index" @tap="gotogooslist({{item}},{{index}})">{{item}}</van-tag>
         </view>
     </view>
 </template>

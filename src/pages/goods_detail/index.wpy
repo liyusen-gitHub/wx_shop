@@ -1,25 +1,190 @@
 <template>
-    <view>商品详情页</view>
+    <view class="goods_detail">
+        <swiper indicator-dots circular>
+            <swiper-item wx:for="{{goodsList.pics}}" wx:key="index">
+                <image @tap="previewImg({{item.pics_big_url}})" src="{{item.pics_big_url}}"></image>
+            </swiper-item>
+        </swiper>
+        <view class="line"></view>
+        <view class="info">
+            <view class="box1">
+                <view class="price">￥168</view>
+                <view class="goods_name">
+                    <view class="left">
+                        卡奇莱德汽车车载空气净化器负离子除甲醛PM2.5除烟异味车用氧吧双涡轮出风（红色）
+                    </view>
+                    <view class="right">
+                        <van-icon name="star-o" />
+                        <text class="like">收藏</text>
+                    </view>
+                </view>
+                <view class="express">快递：免运费</view>
+            </view>
+        </view>
+        <view class="line"></view>
+        <view class="box2">
+            <view class="top">
+                <text>促销</text>
+                <text class="box2_right">满200元减400元</text>
+            </view>
+            <view class="top">
+                <text>已选</text>
+                <text class="box2_right">黑色/s/1件</text>
+            </view>
+        </view>
+        <view class="line"></view>
+        <view class="send" @tap="chossedress">
+            <view>
+                <text>送至</text>
+                <text class="dress">{{dress||'请选择收货地址'}}</text>
+            </view>
+            <view>
+                <van-icon name="arrow" />
+            </view>
+
+        </view>
+        <view class="line"></view>
+        <view>
+            <van-tabs active="{{ 0 }}" bind:change="onChange">
+                <van-tab title="图文详情">
+                    <rich-text nodes="{{goodsList.goods_introduce}}">
+                    </rich-text>
+                </van-tab>
+                <van-tab title="规格参数">
+                    <view class="guige" wx:for="{{goodsList.attrs}}" wx:key="index">
+                        <text>{{item.attr_name||'暂无数据'}}</text>
+                        <text class="name">{{item.attr_value||'暂无数据'}}</text>
+                    </view>
+                </van-tab>
+            </van-tabs>
+        </view>
+        <view>
+            <van-goods-action custom-class="cartbar">
+                <van-goods-action-icon open-type="contact" icon="chat-o" text="客服" bind:click="onClickIcon" />
+                <van-goods-action-icon icon="cart-o" text="购物车" bind:click="onClickIcon" />
+                <van-goods-action-button text="加入购物车" type="warning" bind:click="onClickButton" />
+                <van-goods-action-button text="立即购买" bind:click="onClickButton" />
+            </van-goods-action>
+        </view>
+    </view>
 </template>
 
 <script>
 
-import wepy from 'wepy'
+    import wepy from 'wepy'
+    import detailmixin from '../../mixins/goods_detail/index.js'
 
-export default class Home extends wepy.page {
-    data = {
+    export default class Home extends wepy.page {
+        mixins = [detailmixin]
     }
-
-    config = {
-    }
-
-    methods = {
-        
-    }
-}
 
 </script>
 
 <style lang='less'>
+    .goods_detail {
+        swiper {
+            height: 750rpx;
 
+            image {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .line {
+            width: 100%;
+            height: 15rpx;
+            background-color: #eee;
+        }
+
+        .send {
+            display: flex;
+            font-size: 28rpx;
+            line-height: 30rpx;
+            padding: 25rpx 20rpx;
+            justify-content: space-between;
+            align-items: center;
+
+            .dress {
+                color: #ccc;
+                margin-left: 20rpx;
+            }
+
+        }
+
+        .guige {
+            display: flex;
+
+            text {
+                text-align: center;
+                display: block;
+                color: #333;
+                width: 50%;
+                font-size: 25rpx;
+                border-bottom: 1px solid #ccc;
+                border-right: 1px solid #ccc;
+                line-height: 50rpx;
+            }
+
+            .name {
+                border-right: 0;
+            }
+        }
+
+        .info {
+            .box1 {
+                padding: 20rpx 20rpx;
+
+                .price {
+                    color: red;
+                }
+
+                .goods_name {
+                    display: flex;
+
+                    .left {
+                        font-size: 25rpx;
+                    }
+
+                    .right {
+                        text-align: center;
+                        border-left: 1px solid #eee;
+                        width: 150rpx;
+
+                        /* height:150rpx; */
+                        .like {
+                            display: block;
+                            font-size: 25rpx;
+                        }
+                    }
+                }
+
+                .express {
+                    font-size: 25rpx;
+                }
+            }
+        }
+
+        .box2 {
+            margin: 10rpx 20rpx;
+            font-size: 25rpx;
+
+            .top {
+                height: 30px;
+                line-height: 30px;
+            }
+
+            .box2_right {
+                /* padding: 20rpx 30rpx; */
+                margin-left: 20rpx;
+                color: #BEBEBE;
+            }
+        }
+        .cartbar{
+            z-index:999999;
+        }
+
+
+
+    }
 </style>
