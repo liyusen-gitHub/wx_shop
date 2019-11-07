@@ -1,25 +1,106 @@
 <template>
-    <view>购物车页面</view>
+    <view class="cart">
+        <view class="empty" wx:if="{{isempty}}">
+            <image src="http://destiny001.gitee.io/image/cart_empty.png"></image>
+            <view>诶，购物车是空的呀！！！</view>
+        </view>
+        <view class="cart_list" wx:else>
+            <van-cell title="购物车列表" icon="shopping-cart-o" />
+            <van-swipe-cell right-width="{{ 65 }}" left-width="{{ 1 }}"  wx:for="{{cart}}" wx:key="index">
+                <van-card class="card" title="{{item.name}}">
+                    <!-- 描述信息插槽 -->
+                    <view slot="desc" class="desc">
+                        <text class="price">￥{{item.price}}</text>
+                        <van-stepper data-id="{{item.id}}" value="{{ item.count }}" bind:change="countChange" />
+                    </view>
+                    <!-- 图片插槽 -->
+                    <view slot="thumb" class="thumb">
+                        <van-checkbox  checked-color="#EE6363" data-id="{{item.id}}" value="{{ item.isCheck }}" bind:change="isCheckchange">
+                        </van-checkbox>
+                        <image src="{{item.pic}}"></image>
+                    </view>
+                </van-card>
+
+                <view slot="right" data-id="{{item.id}}" @tap="removeGoods" class="rightremove">删除</view>
+            </van-swipe-cell>
+
+        </view>
+        <view class="submit">
+            <van-submit-bar price="{{ totalPrice }}" button-text="提交订单" bind:submit="onClickButton" tip="{{ true }}">
+                
+                    <van-checkbox  checked-color="#EE6363" style="margin-left:10px" custum-class="fullcheck" value="{{ isfullCheck }}" bind:change="checkall">全选</van-checkbox>
+               
+            </van-submit-bar>
+        </view>
+    </view>
 </template>
 
 <script>
 
-import wepy from 'wepy'
+    import wepy from 'wepy'
+    import cartmixin from '../../mixins/tabs/cart.js'
 
-export default class cart extends wepy.page {
-    data = {
+    export default class cart extends wepy.page {
+        mixins = [cartmixin]
     }
-
-    config = {
-    }
-
-    methods = {
-
-    }
-}
 
 </script>
 
 <style lang='less'>
+    .fullcheck{
+        margin:25rpx 0 0 40rpx;
+    }
+    .cart {
+        .empty {
+            text-align: center;
+            font-size: 30rpx;
+            color: #EE6363;
 
+            image {
+                height: 120rpx;
+                width: 120rpx;
+                margin: 20rpx 0;
+            }
+        }
+
+        .cart_list {
+            margin-bottom: 50px;
+            .card {
+                margin-top: 5px;
+            }
+
+            .desc {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                .price {
+                    color: red;
+                }
+            }
+
+            .thumb {
+                display: flex;
+                width: 110px;
+                align-items: center;
+
+                image {
+                    width: 90px;
+                    height: 90px;
+                    margin-left: 5rpx;
+                }
+            }
+        }
+    }
+.rightremove{
+    width: 65px;
+    height:100px;
+    line-height: 100px;
+    background-color: red;
+    color: #fff;
+    text-align: center;
+}
+    .van-card__thumb {
+        width: 110px !important;
+    }
 </style>

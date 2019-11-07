@@ -30,14 +30,16 @@ export default class Home extends wepy.mixin {
             pagenum:this.pageNum,
             pagesize:this.pageSize
         })
+        // console.log(data)
         this.isloading=false
         this.goodslist=[...this.goodslist,...data.message.goods]
         this.total=data.message.total
         this.$apply()
     }
     onLoad(options) {
-        // console.log(options.query)
+        // console.log(options)
         this.query=options.query
+        this.cat_id=options.goods_id
         // console.log(this.query)
         this.getgoodslist()
     }

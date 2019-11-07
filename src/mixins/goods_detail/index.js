@@ -38,6 +38,14 @@ export default class Home extends wepy.mixin {
             else{
                 wepy.baseToast('取消选择收货地址')
             }
+        },
+        //点击加入购物车按钮
+        onClickButton(){
+            // console.log(this.goodsList)
+            //调用全局保存购物车商品方法
+            // console.log(this.$parent)
+            this.$parent.getcartGoodslist(this.goodsList)
+            wepy.baseToast('添加成功')
         }
 
     }

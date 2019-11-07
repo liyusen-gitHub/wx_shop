@@ -61,7 +61,7 @@
         <view>
             <van-goods-action custom-class="cartbar">
                 <van-goods-action-icon open-type="contact" icon="chat-o" text="客服" bind:click="onClickIcon" />
-                <van-goods-action-icon icon="cart-o" text="购物车" bind:click="onClickIcon" />
+                <van-goods-action-icon icon="cart-o" text="购物车" bind:click="onClickIcon" url="/pages/tabs/cart" link-type="switchTab" />
                 <van-goods-action-button text="加入购物车" type="warning" bind:click="onClickButton" />
                 <van-goods-action-button text="立即购买" bind:click="onClickButton" />
             </van-goods-action>

@@ -46,8 +46,10 @@
             .van-tag {
 
                 text-align: center;
-                width: 20px;
+                width: 55px;
                 margin: 20rpx 20rpx 0 0;
+                height:20px;
+                line-height:20px;
             }
         }
     }

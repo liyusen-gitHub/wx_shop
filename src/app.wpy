@@ -33,7 +33,11 @@
         "van-tabs": "./components/lib/tabs/index",
         "van-goods-action": "./components/lib/goods-action/index",
         "van-goods-action-icon": "./components/lib/goods-action-icon/index",
-        "van-goods-action-button": "./components/lib/goods-action-button/index"
+        "van-goods-action-button": "./components/lib/goods-action-button/index",
+        "van-stepper": "./components/lib/stepper/index",
+        "van-checkbox": "./components/lib/checkbox/index",
+        "van-submit-bar": "./components/lib/submit-bar/index",
+        "van-swipe-cell": "./components/lib/swipe-cell/index"
       },
       window: {
         backgroundTextStyle: 'light',
@@ -55,7 +59,77 @@
     }
 
     globalData = {
-      userInfo: null
+      //定义变量接收全局变量
+      cartGoods:[]
+    }
+    
+    deleteGoods(id){
+      const index=this.globalData.cartGoods.findIndex(item=>{
+        return item.id==id
+      })
+      // console.log(id)
+      this.globalData.cartGoods.splice(index,1)
+      wepy.baseToast('删除成功')
+      this.saveCartGoods(this.globalData.cartGoods)
+    }
+    updateCount(id,count){
+      // console.log(id,count)
+      const index=this.globalData.cartGoods.findIndex(item=>{
+        return item.id==id
+      })
+      // console.log(index)
+      this.globalData.cartGoods[index].count=count
+      this.saveCartGoods(this.globalData.cartGoods)
+    }
+    updateIsCheck(id,isCheck){
+
+      // console.log(isCheck)
+      // console.log(!isCheck)
+      const index=this.globalData.cartGoods.findIndex(item=>{
+        return item.id==id
+      })
+      // console.log()
+      this.globalData.cartGoods[index].isCheck=!isCheck
+      // console.log(this.globalData.cartGoods)
+      this.saveCartGoods(this.globalData.cartGoods)
+    }
+    updateAllIsCheck(status){
+      // console.log(this.globalData.cartGoods)
+      // console.log(status)
+      this.globalData.cartGoods.forEach(item=>{
+        item.isCheck=status
+      })
+      // console.log(this.globalData.cartGoods)
+      this.saveCartGoods(this.globalData.cartGoods)
+    }
+    //定义方法用来保存接收到的购物车商品信息
+    getcartGoodslist(list){
+      const index=this.globalData.cartGoods.findIndex(item=>{
+        return item.id==list.goods_id
+      })
+      if(index==-1)
+      {
+        const obj={
+        id:list.goods_id,
+        name:list.goods_name,
+        pic:list.goods_big_logo,
+        count:1,
+        price:list.goods_price,
+        isCheck:true
+      }
+      //保存传过来的购物车商品信息
+      this.globalData.cartGoods.push(obj)
+      }
+      else{
+        this.globalData.cartGoods[index].count++
+      }
+      
+      this.saveCartGoods(this.globalData.cartGoods)
+      console.log(this.globalData.cartGoods)
+    }
+    //将购物车商品列表保存到本地
+    saveCartGoods(list){
+      wepy.setStorageSync('carts',list)
     }
 
     constructor() {
@@ -97,7 +171,7 @@
 
 
     onLaunch() {
-
+      this.globalData.cartGoods=wepy.getStorageSync('carts')||[]
     }
 
 
